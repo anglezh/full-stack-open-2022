@@ -2,10 +2,12 @@ const express = require('express')
 const cors = require('cors')
 var morgan = require('morgan')
 const moment = require('moment-timezone')
+const { request, response } = require('express')
 const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('build'))
 app.use(morgan('[:date[Asia/Taipei]] :method :url :status :res[content-length] - :response-time ms'))
 morgan.token('date', (req, res, tz) => {
     return moment().tz(tz).format();
@@ -43,7 +45,6 @@ const generateId = () => {
     return maxId + 1
 }
 app.get('/api/notes', (request, response) => {
-    console.log(response)
     response.json(notes)
 })
 app.get('/api/notes/:id', (request, response) => {
@@ -56,6 +57,7 @@ app.get('/api/notes/:id', (request, response) => {
     }
 })
 app.post('/api/notes', (require, response) => {
+    console.log(require.body)
     const body = require.body
     if (!body.content) {
         return response.status(400).json({
@@ -69,7 +71,6 @@ app.post('/api/notes', (require, response) => {
         important: body.important || false
     }
     notes = notes.concat(note)
-    console.log(notes)
     response.json(note)
 })
 app.delete('/api/notes/:id', (request, response) => {
@@ -77,6 +78,21 @@ app.delete('/api/notes/:id', (request, response) => {
     notes = notes.filter(note => note.id !== id)
 
     response.status(204).end()
+})
+app.put('/api/notes/:id', (require, response) => {
+    const body = require.body
+    if (!body.content) {
+        return response.status(400).json({
+            error: 'content missing'
+        })
+    }
+    const note = {
+        id: body.id,
+        content: body.content,
+        date: new Date(),
+        important: body.important || false
+    }
+    response.json(note)
 })
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
