@@ -120,7 +120,7 @@ const App = () => {
 
         person.number = number
         personService
-          .update(person.id, person)
+          .update(person)
           .then(returnedPerson => {
             setPersons(persons.map(p => p.id === person.id ? returnedPerson : p))
           })

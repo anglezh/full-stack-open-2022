@@ -1,6 +1,8 @@
-  GET http://localhost:3001/api/notes
+GET http://localhost:3001/api/notes
 ###
- DELETE http://localhost:3001/api/notes/4
+GET http://localhost:3001/api/notes/67e9538
+###
+DELETE http://localhost:3001/api/notes/4
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
@@ -11,12 +13,10 @@ Content-Type: application/json
 }
 ###
 
-PUT http://localhost:3001/api/notes/1
+PUT http://localhost:3001/api/notes/63a400801d40f72af07e9538
 Content-Type: application/json
 
 {
-    "id": 1,
-    "content": "HTML is easy",
-    "date": "2022-05-30T17:30:31.098Z",
+    "content": "HTML is Easy",
     "important": false
 }
