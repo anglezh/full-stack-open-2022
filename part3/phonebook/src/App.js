@@ -1,65 +1,9 @@
 import { useState, useEffect } from 'react'
 import personService from './services/person'
-
-const Filter = ({ filter, filterPerson }) => {
-  return (
-    <div>filter shown with <input value={filter} onChange={filterPerson} /></div>
-  )
-}
-const PersonForm = ({ addPerson, newName, handleName, number, handleNumber }) => {
-  return (
-    <form onSubmit={addPerson}>
-      <div>
-        name: <input value={newName} onChange={handleName} />
-        <br />
-        number:<input value={number} onChange={handleNumber} />
-      </div>
-      <div>
-        <button type="submit">add</button>
-      </div>
-    </form>
-  )
-}
-const Notification = ({ message, isSuccess }) => {
-  const errorStyle = {
-    color: 'red',
-    background: 'lightgrey',
-    fontSize: 20,
-    borderStyle: 'solid',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10
-  }
-  const successStyle = {
-    color: 'green',
-    background: 'lightgrey',
-    fontSize: 20,
-    borderStyle: 'solid',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10
-  }
-  if (message === null) {
-    return null
-  } else if (isSuccess) {
-    return (
-      <div style={successStyle}>{message}</div>
-    )
-  } else {
-    return (
-      <div style={errorStyle}>{message}</div>
-    )
-  }
-
-}
-const Persons = ({ person, deletePerson }) => {
-
-  return (
-    <div key={person.id}>
-      {person.name} {person.number}<button key={person.id} onClick={deletePerson}>delete</button>
-    </div>
-  )
-}
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
+import Notification from './components/Notification'
+import Persons from './components/Persons'
 
 const App = () => {
   var [persons, setPersons] = useState([])
@@ -75,6 +19,16 @@ const App = () => {
   const handleNumber = (event) => {
     setNumber(event.target.value)
   }
+
+  const ShowMessage = (message, isGreenYes, ms) => {
+    setMessage(message)
+    setIsSuccess(isGreenYes)
+    setTimeout(() => {
+      setMessage(null)
+      setIsSuccess(null)
+    }, ms);
+  }
+
   useEffect(() => {
     personService
       .getAll()
@@ -100,17 +54,17 @@ const App = () => {
   }
   const addPerson = (event) => {
     event.preventDefault()
-    if (newName.length < 2) {
-      setMessage(`Person validation failed: name:Path\`name\`(${newName}) is shorter than the minimum allowed length(2)`)
-      setIsSuccess(false)
-      return
-    }
+    // if (newName.length < 2) {
+    //   setMessage(`Person validation failed: name:Path\`name\`(${newName}) is shorter than the minimum allowed length(2)`)
+    //   setIsSuccess(false)
+    //   return
+    // }
 
-    if (number.length < 2) {
-      setMessage(`Person validation failed: number:Path\`number\`(${number}) is shorter than the minimum allowed length(2)`)
-      setIsSuccess(false)
-      return
-    }
+    // if (number.length < 2) {
+    //   setMessage(`Person validation failed: number:Path\`number\`(${number}) is shorter than the minimum allowed length(2)`)
+    //   setIsSuccess(false)
+    //   return
+    // }
     const person = repeaPersonDic(newName)
 
     if (person !== null) {
@@ -125,12 +79,7 @@ const App = () => {
             setPersons(persons.map(p => p.id === person.id ? returnedPerson : p))
           })
           .catch(error => {
-            setMessage(`Information of ${person.name} has already been removed from server`)
-            setIsSuccess(false)
-            setTimeout(() => {
-              setMessage(null)
-              setIsSuccess(null)
-            }, 5000);
+            ShowMessage(error.response.data.error, false, 5000)
           })
 
       }
@@ -144,17 +93,14 @@ const App = () => {
         .creat(personObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
-          setMessage(`Added ${returnedPerson.name}`)
-          setIsSuccess(true)
+          ShowMessage(`Added ${returnedPerson.name}`, true, 2000)
           setNewName('')
           setNumber('')
-          setTimeout(() => {
-            setMessage(null)
-          }, 5000);
+        })
+        .catch(error => {
+          ShowMessage(error.response.data.error, false, 2000)
         })
     }
-
-
   }
   const repeaPersonDic = (name) => {
     console.log(name)
