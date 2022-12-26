@@ -6,7 +6,7 @@ blogRouter.get('/', (request, response) => {
     .then(blogs => response.json(blogs))
 })
 
-blogRouter.post('/', (require, response) => {
+blogRouter.post('/', (require, response, next) => {
   const blog = new Blog(require.body)
 
   blog.save().then(savedBlog => {
