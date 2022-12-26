@@ -1,0 +1,11 @@
+GET http://localhost:3003/api/blogs
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title":"RFC 9110 HTTP Semantics",
+  "author":"R. Fielding, Ed. & M. Nottingham, Ed. & J. Reschke, Ed.",
+  "url":"https://www.rfc-editor.org/rfc/rfc9110.html",
+  "likes":12
+}
