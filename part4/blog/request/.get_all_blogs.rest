@@ -1,0 +1,30 @@
+GET http://localhost:3003/api/blogs
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+ {
+    "title": "React patterns",
+    "author": "Michael Chan",
+    "url": "https://reactpatterns.com/"
+  }
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+ {
+    "author": "Michael Chan"
+  }
+
+###
+DELETE   http://localhost:3003/api/blogs/63ab9e3bcbb4d3d6e2b86839
+###
+PUT http://localhost:3003/api/blogs/63aba43c84dd35cd2ce81cc8
+Content-Type: application/json
+
+{
+  "title": "XIN",
+  "url": "https//mixin.one",
+  "likes":90,
+  "author":"fengxiaodong"
+}

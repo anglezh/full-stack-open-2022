@@ -1,4 +1,4 @@
-const Blog = require('../models/note')
+const Blog = require('../models/blog')
 
 const dummy = (blogs) => {
   return 1
