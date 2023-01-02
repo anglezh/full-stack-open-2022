@@ -5,9 +5,10 @@ GET http://localhost:3001/api/notes/63a400801d40f72af07e9538
 ###
 POST http://localhost:3001/api/notes/
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InpoYW5nc2FuZmVuZyIsImlkIjoiNjNhZDMzNTBlNTgzZGNhNjVkZDAyNDI1IiwiaWF0IjoxNjcyMzA0NjQ0fQ.0oK2HRtNzjX60gBSZIx5MTn0WDuDKuWC-5Xsk_HASsY
 
 {
-  "content": "get_all_notes.rest",
+  "content": "Single Page Apps use token Authorization学习流程",
   "important": true
 }
 ###
@@ -28,4 +29,23 @@ Content-Type: application/json
 {
   "content": "get_all_notes.rest",
   "important": false
+}
+
+###
+POST http://localhost:3001/api/notes/
+Content-Type: application/json
+
+{
+  "content": "User id of the note creater is at the start sent along the request",
+  "important": true,
+  "userId":"63ad3350e583dca65dd02425"
+}
+###
+POST http://localhost:3001/api/notes/
+Content-Type: application/json
+
+{
+  "content": "注意使用await的时候",
+  "important": true,
+  "userId":"63ad3350e583dca65dd02425"
 }

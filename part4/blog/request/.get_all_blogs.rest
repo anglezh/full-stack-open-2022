@@ -17,7 +17,9 @@ Content-Type: application/json
   }
 
 ###
-DELETE   http://localhost:3003/api/blogs/63ab9e3bcbb4d3d6e2b86839
+DELETE   http://localhost:3003/api/blogs/63afc8b4f1162880df41315c
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvbmdodWFqaWFuZyIsImlkIjoiNjNhZTU0ZTlkMzViMDBhNDAzNDlkODMwIiwiaWF0IjoxNjcyMzc5MTE2fQ.wpHlxz8wEiUV9-4GcNR3hxyzlmpNmzpy9Iwynz7EYm0
+# Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYzYWU1NGE5ZDM1YjAwYTQwMzQ5ZDgyYyIsImlhdCI6MTY3MjQwNTUxMX0.J5Yhlbt-qN7Ey36nvmsiozEvwfyyTbnchCrQYXiJs0w
 ###
 PUT http://localhost:3003/api/blogs/63aba43c84dd35cd2ce81cc8
 Content-Type: application/json
@@ -27,4 +29,45 @@ Content-Type: application/json
   "url": "https//mixin.one",
   "likes":90,
   "author":"fengxiaodong"
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvbmdodWFqaWFuZyIsImlkIjoiNjNhZTU0ZTlkMzViMDBhNDAzNDlkODMwIiwiaWF0IjoxNjcyMzc5MTE2fQ.wpHlxz8wEiUV9-4GcNR3hxyzlmpNmzpy9Iwynz7EYm0
+Content-Type: application/json
+
+{
+  "title": "代码托管平台",
+  "url": "https://github.com",
+  "userId": "63ae54e9d35b00a40349d830",
+  "author": "unknow",
+  "likes": 999
+}
+###
+
+POST  http://localhost:3003/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvbmdodWFqaWFuZyIsImlkIjoiNjNhZTU0ZTlkMzViMDBhNDAzNDlkODMwIiwiaWF0IjoxNjcyMzc5MTE2fQ.wpHlxz8wEiUV9-4GcNR3hxyzlmpNmzpy9Iwynz7EYm0
+Content-Type: application/json
+
+{
+  "title": "翻译平台",
+  "url": "http://deepl.com",
+  "author": "unkonw",
+  "likes": "888"
+
+}
+
+###
+
+POST  http://localhost:3003/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvbmdodWFqaWFuZyIsImlkIjoiNjNhZTU0ZTlkMzViMDBhNDAzNDlkODMwIiwiaWF0IjoxNjcyMzc5MTE2fQ.wpHlxz8wEiUV9-4GcNR3hxyzlmpNmzpy9Iwynz7EYm0
+Content-Type: application/json
+
+{
+  "title": "医疗手册",
+  "url": "https://www.msdmanuals.cn/home",
+  "author": "默沙东",
+  "likes": "8888"
+
 }
