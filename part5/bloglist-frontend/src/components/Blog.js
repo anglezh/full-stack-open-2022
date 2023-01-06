@@ -17,15 +17,15 @@ const Blog = ({ blog, toggleLike, removeBlog, username }) => {
     setShowDetail(!showDetail)
   }
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <div>
         {blog.title} {blog.author} <button onClick={toggleDetail}>{showDetail ? 'hide' : 'view'}</button>
       </div>
       <div style={showWhenVisible}>
         <a href={blog.url}>{blog.url}</a><br />
-        likes:{blog.likes} <button onClick={toggleLike}>like</button><br />
+        likes:{blog.likes} <button className='like-toggle' onClick={toggleLike}>like</button><br />
         {blog.user?.name}
-        <div style={showRVisible}><button onClick={removeBlog}>remove</button></div>
+        <div style={showRVisible}><button className='remove-blog' onClick={removeBlog}>remove</button></div>
       </div>
     </div >
   )

@@ -6,6 +6,7 @@ import Notification from './components/Notification'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import LoginForm from './components/loginForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -31,9 +32,9 @@ const App = () => {
   }, [])
 
   const sortBlogs = (blogs) => {
-    setBlogs(blogs.sort((a, b) => a.likes - b.likes))
+    setBlogs(blogs.sort((a, b) => b.likes - a.likes))
   }
-  const handlerLogin = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
     try {
       const user = await loginService.login({ username, password })
@@ -88,50 +89,39 @@ const App = () => {
       window.location.reload()
     }
   }
-
-  const loginForm = () => (
-    <form onSubmit={handlerLogin}>
-      <h2>log in to application</h2>
+  if (user === null) {
+    return (
       <div>
-        username
-        <input type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
+        <Notification message={message} />
+        <LoginForm
+          username={username}
+          password={password}
+          handleSubmit={handleLogin}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleUsernameChange={({ target }) => setUsername(target.value)} />
       </div>
+    )
+  } else {
+    return (
       <div>
-        password
-        <input type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type='submit'>login</button>
-    </form>
+        <Notification message={message} />
+        <h2>blogs</h2>
+        <p>{user.name} logged in <button onClick={logout}>logout</button></p>
+        <div>
+          <Togglable buttonLabel="new note" ref={blogFormRef}>
+            <BlogForm createBlog={createBlog} />
+          </Togglable>
+          {
+            blogs.map(blog =>
+              <Blog key={blog.id} blog={blog} toggleLike={() => { toggleLikeOf(blog) }} removeBlog={() => { removeBlogOf(blog) }} username={user?.username} />
+            )
+          }
+        </div>
+      </div>)
 
-  )
+  }
 
-  return (
-    <div>
-      <Notification message={message} />
 
-      <h2>blogs</h2>
-      <p>{user?.name} logged in <button onClick={() => logout()}>logout</button></p>
-      {user === null && loginForm()}
-      {user !== null &&
-        <Togglable buttonLabel="new note" ref={blogFormRef}>
-          <BlogForm createBlog={createBlog} />
-        </Togglable>
-      }
-      {
-        blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} toggleLike={() => { toggleLikeOf(blog) }} removeBlog={() => { removeBlogOf(blog) }} username={user.username} />
-        )
-      }
-    </div>
-  )
 }
 
 export default App
