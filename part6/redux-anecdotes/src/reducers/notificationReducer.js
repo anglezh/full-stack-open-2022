@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = null
 const notificationSlice = createSlice({
@@ -8,11 +8,25 @@ const notificationSlice = createSlice({
     notificationChange(state, action) {
       return action.payload
     },
-    notificationHidden(state, action) {
+    notificationHidden() {
       return null
     }
   }
 })
+var timeoutID = null
+export const setNotification = (content, second) => {
+
+  return dispatch => {
+    if (timeoutID) {
+      window.clearTimeout(timeoutID)
+    }
+    dispatch(notificationChange(content))
+    timeoutID = window.setTimeout(() => {
+      dispatch(notificationHidden())
+      timeoutID = null
+    }, 1000 * second)
+  }
+}
 
 export const { notificationChange, notificationHidden } = notificationSlice.actions
 export default notificationSlice.reducer
