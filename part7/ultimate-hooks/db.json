@@ -1,0 +1,46 @@
+{
+  "notes": [
+    {
+      "content": "custom-hooks are great",
+      "id": 1
+    },
+    {
+      "content": "the best featrure ever <3",
+      "id": 2
+    },
+    {
+      "content": "this is three",
+      "id": 7170
+    },
+    {
+      "content": "this is four",
+      "id": 8093
+    },
+    {
+      "content": "this is five",
+      "id": 330
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "kaltsoon",
+      "number": "045-2323456",
+      "id": 2
+    },
+    {
+      "name": "zhangle9",
+      "number": "890122",
+      "id": 7455
+    },
+    {
+      "name": "zhao",
+      "number": "198-0909000",
+      "id": 6643
+    }
+  ]
+}
