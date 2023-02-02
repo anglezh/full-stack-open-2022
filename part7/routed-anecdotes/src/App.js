@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   Routes,
@@ -27,7 +27,7 @@ const AnecdoteList = ({ anecdotes }) => {
     <div>
       <h2>Anecdotes</h2>
       <ul>
-        {anecdotes.map(anecdote => <li key={anecdote.id} onClick={() => clickAnecdote(anecdote.id)} >{anecdote.content}</li>)}
+        {anecdotes.map(anecdote => <li key={anecdote.id} onClick={() => clickAnecdote(anecdote.id)} ><a href=''>{anecdote.content}</a></li>)}
       </ul>
     </div >
   )
@@ -124,6 +124,9 @@ const App = () => {
       id: 2
     }
   ])
+  useEffect(() => {
+    console.log('xxxxxxxxx')
+  })
 
 
   const [notification, setNotification] = useState('')
