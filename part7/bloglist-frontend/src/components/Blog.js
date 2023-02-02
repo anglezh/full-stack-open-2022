@@ -1,5 +1,7 @@
 import { useState } from 'react'
-const Blog = ({ blog, toggleLike, removeBlog, username }) => {
+import { useDispatch, useSelector } from 'react-redux'
+import { removeBlogOf, toggleLikeOf } from '../reducers/blogReducer'
+const Blog = ({ blog, toggleLike, removeBlog, userID }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -12,7 +14,7 @@ const Blog = ({ blog, toggleLike, removeBlog, username }) => {
 
   const showWhenVisible = { display: showDetail ? '' : 'none' }
   const showRVisible = {
-    display: username === blog.user?.username ? '' : 'none',
+    display: userID === blog.user?.id ? '' : 'none',
   }
   const toggleDetail = (event) => {
     event.preventDefault()
@@ -43,4 +45,44 @@ const Blog = ({ blog, toggleLike, removeBlog, username }) => {
   )
 }
 
-export default Blog
+const BlogList = () => {
+
+  const dispatch = useDispatch()
+  const user = useSelector(({ userInfo }) => {
+    return userInfo
+  })
+
+  const blogs = useSelector(({ blogs }) => {
+    return blogs
+  })
+
+  const toggleLike = (blog) => {
+    const likeToBlog = blogs.find(b => b.id === blog.id)
+    const changeBlog = { ...likeToBlog, likes: likeToBlog.likes + 1 }
+    dispatch(toggleLikeOf(changeBlog))
+  }
+
+  const removeBlog = (blog) => {
+    console.log(blog)
+    dispatch(removeBlogOf(blog))
+  }
+
+  return (
+    <div>
+      {
+        blogs.map((blog) => (
+          <Blog
+            key={blog.id}
+            blog={blog}
+            toggleLike={() => toggleLike(blog)}
+            removeBlog={() => removeBlog(blog)}
+            userID={user.id}
+          />
+        ))
+      }
+    </div>
+
+  )
+}
+
+export default BlogList

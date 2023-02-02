@@ -1,1 +1,4 @@
-{}
+{
+  "prettier.singleQuote": true,
+  "semi": false
+}

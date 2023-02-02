@@ -40,6 +40,12 @@ blogRouter.post('/', userExtractor, async (request, response, next) => {
 
 blogRouter.delete('/:id', userExtractor, async (request, response, next) => {
   const blog = await Blog.findById(request.params.id)
+  if (!blog) {
+    response.status(404).json({
+      error: 'nont fount blog'
+    })
+    return
+  }
 
   const user = request.user
   if (blog.user.toString() === user.id) {

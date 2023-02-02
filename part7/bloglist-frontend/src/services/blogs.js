@@ -19,7 +19,6 @@ const likes = async (blog) => {
   const config = {
     headers: { Authorization: token },
   }
-  blog.likes += 1
   console.log(blog.likes)
   const response = await axios.put(`${baseUrl}/${blog.id}`, blog, config)
   return response.data
