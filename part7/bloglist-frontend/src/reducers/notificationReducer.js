@@ -16,13 +16,13 @@ const notificationSlice = createSlice({
 })
 
 var timeoutID = null
-export const setNotification = (content, second) => {
+export const setNotification = (content, variant, second) => {
 
   return dispatch => {
     if (timeoutID) {
       window.clearTimeout(timeoutID)
     }
-    dispatch(notificationChange(content))
+    dispatch(notificationChange({ message: content, variant: variant }))
     timeoutID = window.setTimeout(() => {
       dispatch(notificationHidden())
       timeoutID = null

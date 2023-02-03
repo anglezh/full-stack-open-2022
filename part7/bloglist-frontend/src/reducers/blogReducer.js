@@ -68,11 +68,6 @@ export const removeBlogOf = (blog) => {
 
 export const commentBlogOf = (comment, blog) => {
   return async dispatch => {
-    // await blogService.comment(comment, blog)
-    // blog.comments = []
-    // blog.comments.concat(comment)
-    // const commnetOfBlog = { ...blog, comments: blog.comments.concat(comment) }
-    // await blogService.comment(commnetOfBlog)
     const commnetOfBlog = { ...blog, comment: comment }
     const updateBlog = await blogService.comment(commnetOfBlog)
     updateBlog.user = blog.user

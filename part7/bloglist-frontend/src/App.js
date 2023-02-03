@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 
-import Notification from './components/Notification'
 import BlogList from './components/BlogList'
 import Login from './components/loginForm'
 import User from './components/User'
 import UsersPage from './components/UsersPage'
 import UserInfoPage from './components/UserInfoPage'
 import BlogInfoPage from './components/BlogInfoPage'
+import Notification from './components/Notification'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
@@ -33,18 +33,18 @@ const App = () => {
     dispatch(getUser())
     dispatch(initializeBlogs())
   }, [])
+
   if (loginUser === null) {
     return (
       <div>
-        <Notification />
         <Login />
       </div>
     )
   }
 
   return (
-
-    <div>
+    <div className='container'>
+      <Notification />
       <h2>blogs</h2>
       <User />
       <div>
