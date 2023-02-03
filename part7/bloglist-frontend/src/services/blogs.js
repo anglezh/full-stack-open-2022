@@ -30,10 +30,17 @@ const remove = async (blogId) => {
   const response = await axios.delete(`${baseUrl}/${blogId}`, config)
   return response.data
 }
+const comment = async (changeBlog) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.post(`${baseUrl}/${changeBlog.id}/comments`, changeBlog, config)
+  return response.data
+}
 
 const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then((response) => response.data)
 }
-const exportDefault = { getAll, setToken, create, likes, remove }
+const exportDefault = { getAll, setToken, create, likes, remove, comment }
 export default exportDefault

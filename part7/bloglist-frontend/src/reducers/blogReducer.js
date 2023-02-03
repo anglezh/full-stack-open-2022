@@ -17,6 +17,10 @@ const blogSlice = createSlice({
       const updateBlog = action.payload
       return state.map(blog => updateBlog.id === blog.id ? updateBlog : blog)
     },
+    commentBlog(state, action) {
+      const commentBlog = action.payload
+      return state.map(blog => commentBlog.id === blog.id ? commentBlog : blog)
+    },
     removedBlog(state, action) {
       state.pop(action.payload)
     }
@@ -35,11 +39,11 @@ export const initializeBlogs = () => {
   }
 }
 
-export const toggleLikeOf = (blog) => {
+export const toggleLikeOf = (changeBlog) => {
   return async dispatch => {
     try {
-      const updatedBlog = await blogService.likes(blog)
-      updatedBlog.user = blog.user
+      const updatedBlog = await blogService.likes(changeBlog)
+      updatedBlog.user = changeBlog.user
       dispatch(toggleLikeUpdate(updatedBlog))
     } catch (error) {
       console.log(error)
@@ -61,5 +65,20 @@ export const removeBlogOf = (blog) => {
     }
   }
 }
-export const { appendBlog, setBlogs, toggleLikeUpdate, removedBlog } = blogSlice.actions
+
+export const commentBlogOf = (comment, blog) => {
+  return async dispatch => {
+    // await blogService.comment(comment, blog)
+    // blog.comments = []
+    // blog.comments.concat(comment)
+    // const commnetOfBlog = { ...blog, comments: blog.comments.concat(comment) }
+    // await blogService.comment(commnetOfBlog)
+    const commnetOfBlog = { ...blog, comment: comment }
+    const updateBlog = await blogService.comment(commnetOfBlog)
+    updateBlog.user = blog.user
+    console.log(updateBlog)
+    dispatch(commentBlog(updateBlog))
+  }
+}
+export const { appendBlog, setBlogs, toggleLikeUpdate, removedBlog, commentBlog } = blogSlice.actions
 export default blogSlice.reducer

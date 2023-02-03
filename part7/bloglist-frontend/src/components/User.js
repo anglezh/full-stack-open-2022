@@ -19,6 +19,7 @@ const User = () => {
   return (
     <p>
       <Link style={padding} to={'/users'}>users</Link>
+      <Link style={padding} to={'/'}>blogs</Link>
       {user?.name} logged in <button onClick={logout}>logout</button>
     </p>
   )
