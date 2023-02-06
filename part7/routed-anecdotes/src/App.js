@@ -124,10 +124,6 @@ const App = () => {
       id: 2
     }
   ])
-  useEffect(() => {
-    console.log('xxxxxxxxx')
-  })
-
 
   const [notification, setNotification] = useState('')
 

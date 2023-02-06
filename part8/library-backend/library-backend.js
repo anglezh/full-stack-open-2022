@@ -116,9 +116,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    editAuthor(
+    updateAuthor(
       name: String
-      setBornTo: Int
+      born: Int
     ): Author
   }
 `
@@ -138,6 +138,8 @@ const resolvers = {
       } else if (args.author) {
         const booksOfAuthor = books.filter(b => b.author === args.author)
         return booksOfAuthor
+      } else {
+        return books
       }
     },
     allAuthors: () => authors,
@@ -158,12 +160,13 @@ const resolvers = {
       }
       return book
     },
-    editAuthor: (root, args) => {
+    updateAuthor: (root, args) => {
       const author = authors.find(a => a.name === args.name)
       if (!author) {
         return null
       }
-      author.born = args.setBornTo
+      author.born = args.born
+      authors.map(a => a.name === author.name ? author : a)
       return author
     }
   },
