@@ -67,6 +67,8 @@ const typeDefs = `
       genres: [String!]!
     ): Book!
 
+    createAuthor(name:String!, setBornTo:Int): Author
+
     editAuthor(name: String!, setBornTo: Int!): Author
 
     createUser(
@@ -131,7 +133,24 @@ const resolvers = {
         throw new AuthenticationError("not authenticated")
       }
       const author = await Author.find({ name: args.author })
-      book.author = author[0]._id
+      if (author.length === 0) {
+        const author = new Author({ name: args.author })
+        try {
+          await author.save()
+        } catch (error) {
+          throw new GraphQLError(error.message, {
+            extensions: {
+              code: 'BAD_USER_INPUT',
+              invalidArgs: args.name,
+              error
+            }
+          })
+        }
+        book.author = author._id
+      } else {
+        book.author = author[0]._id
+
+      }
 
       try {
         await book.save()
@@ -144,8 +163,28 @@ const resolvers = {
           }
         })
       }
-      book.author = author[0]
+      newAuthor = new Author({ name: args.author })
+      book.author = author.length === 0 ? newAuthor : author[0]
       return book
+    },
+    createAuthor: async (root, args, context) => {
+      const author = new Author({ ...args })
+      const currentUser = context.currentUser
+      if (!currentUser) {
+        throw new AuthenticationError("not authenticated")
+      }
+      try {
+        await author.save()
+      } catch (error) {
+        throw new GraphQLError(error.message, {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+            error
+          }
+        })
+      }
+      return author
     },
     editAuthor: async (root, args, context) => {
       const newAuthor = { ...args }
