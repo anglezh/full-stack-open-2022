@@ -9,4 +9,5 @@ diagnoseRouter.get('/',(_req, res)=>{
  res.send(diagnoseService.getDiagnoseData());
 });
 
+
 export default diagnoseRouter

@@ -1,7 +1,7 @@
 import diagnoseData from '../../data/diagnoses.json'
-import { Diagnose } from '../types'
+import { Diagnosis } from '../types'
 
-const getDiagnoseData = ():Diagnose[] =>{
+const getDiagnoseData = ():Diagnosis[] =>{
   return diagnoseData
 }
 
